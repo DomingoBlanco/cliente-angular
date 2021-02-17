@@ -1,0 +1,38 @@
+<ul *ngIf="paginas?.length >0" class="pagination">
+
+  <! link de la  pagina anterior en el li preguntamos si la pagina actual es mayor a cero muestre la flecha anterior -->
+   <li class="page-item" *ngIf="paginador.number >0">
+     <a class="page-link" [routerLink]="['/clientes/page', paginador.number-1]">&laquo;</a>
+   </li>
+
+   <! link para ir directo a la primera pagina preguntamos con ngclass si estamos en la primera pagination
+    para de esta forma deshabilitar la primera pagina
+  -->
+  <li [ngClass]="paginador.first? 'disabled page-item': 'page-item'">
+      <a class="page-link" [routerLink]="['/clientes/page', 0]">Primera</a>
+  </li>
+
+  <li  class="page-item" *ngFor="let pagina of paginas" [ngClass]="pagina-1 == paginador.number? 'page-item active':'page-item'">
+    <! colocamos este span para validar si estamos en la misma pagina del paginador deshabilite
+    la condicion esta en el ngif del span si la pagina donde estamos es igual a la pagina del paginador
+    la opciopn es darle click al spam y no al link por eso no pagina -->
+    <! en el link le colocamos una condicion que el numero de pagina sea distinta a la pagina del paginador -->
+    <span class="page-link" *ngIf="pagina-1 == paginador.number">{{pagina}}</span>
+    <a *ngIf="pagina-1 != paginador.number" class="page-link" [routerLink]="['/clientes/page', pagina-1]">{{pagina}}</a>
+
+  </li>
+
+  <! link para ir directo a la ultima pagina preguntamos con ngclass si estamos en la ultima pagination
+   para de esta forma deshabilitar  la ultima pagina
+ -->
+  <li [ngClass]="paginador.last?' disabled page-item': 'page-item'">
+      <a class="page-link" [routerLink]="['/clientes/page', paginador.totalPages-1]">Última</a>
+  </li>
+
+ <! link de la siguiente pagina en el li preguntamos si la pagina actual es menor a la cantidad total de pagina
+ muestra la flecha siguiente -->
+  <li class="page-item" *ngIf="paginador.number < paginador.totalPages-1">
+    <a class="page-link" [routerLink]="['/clientes/page', paginador.number+1]">&raquo;</a>
+  </li>
+
+</ul>
